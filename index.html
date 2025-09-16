@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Absensi Digital Siswa</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+</head>
+<body>
+  <header>
+    <h1>Absensi Digital Siswa Kelas 5 SD Negeri Katelan 1</h1>
+    <p><strong>Kepala Sekolah:</strong> Sri Wiji Mulyani, S.Pd, SD — NIP: 197011272005012006</p>
+    <p><strong>Wali Kelas:</strong> Anna Endri Lestari, S.Pd — NIP: 199105022024212042</p>
+  </header>
+
+  <section id="student-section">
+    <h2>📸 Data Siswa</h2>
+    <form id="studentForm">
+      <input type="text" id="studentName" placeholder="Nama Siswa" required />
+      <input type="text" id="studentNIS" placeholder="NIS" required />
+      <input type="file" id="studentPhoto" accept="image/*" />
+      <button type="submit">Tambah Siswa</button>
+    </form>
+    <div id="studentList"></div>
+  </section>
+
+  <section id="attendance-section">
+    <h2>📝 Form Absensi</h2>
+    <form id="attendanceForm">
+      <select id="attendanceName" required></select>
+      <select id="attendanceStatus" required>
+        <option value="Hadir">Hadir</option>
+        <option value="Alfa">Alfa</option>
+        <option value="Sakit">Sakit</option>
+        <option value="Izin">Izin</option>
+      </select>
+      <button type="submit">Submit Absensi</button>
+    </form>
+  </section>
+<h3>📅 Pilih Tanggal</h3>
+<input type="date" id="dateSelector" onchange="filterByDate()" />
+<h3>📆 Pilih Bulan</h3>
+<select id="monthSelector" onchange="filterByMonth()">
+  <option value="">-- Semua Bulan --</option>
+  <option value="01">Januari</option>
+  <option value="02">Februari</option>
+  <option value="03">Maret</option>
+  <option value="04">April</option>
+  <option value="05">Mei</option>
+  <option value="06">Juni</option>
+  <option value="07">Juli</option>
+  <option value="08">Agustus</option>
+  <option value="09">September</option>
+  <option value="10">Oktober</option>
+  <option value="11">November</option>
+  <option value="12">Desember</option>
+</select>
+  <section id="rekap-section">
+    <h2>📊 Rekap Kehadiran Harian</h2>
+    <table id="dailyAttendance">
+      <thead>
+        <tr>
+          <th>Nama</th>
+          <th>Hadir</th>
+          <th>Alfa</th>
+          <th>Sakit</th>
+          <th>Izin</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+<button onclick="printSection('dailyRecap')">🖨️ Cetak Rekap Harian</button>
+<h3>📅 Rekap Harian</h3>
+<input type="date" id="dailySelector" onchange="showDailyRecap()" />
+<table id="dailyRecap">
+  <thead>
+    <tr>
+      <th>Nama</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+<button onclick="printSection('monthlyRecap')">🖨️ Cetak Rekap Bulanan</button>
+<h3>📆 Rekap Bulanan</h3>
+<select id="monthlySelector" onchange="showMonthlyRecap()">
+  <option value="">-- Pilih Bulan --</option>
+  <option value="01">Januari</option>
+  <option value="02">Februari</option>
+  <option value="03">Maret</option>
+  <option value="04">April</option>
+  <option value="05">Mei</option>
+  <option value="06">Juni</option>
+  <option value="07">Juli</option>
+  <option value="08">Agustus</option>
+  <option value="09">September</option>
+  <option value="10">Oktober</option>
+  <option value="11">November</option>
+  <option value="12">Desember</option>
+</select>
+
+<table id="monthlyRecap">
+  <thead>
+    <tr>
+      <th>Nama</th>
+      <th>Hadir</th>
+      <th>Alfa</th>
+      <th>Sakit</th>
+      <th>Izin</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+    <div id="monthlySummary">
+      <p>Jumlah Hadir: <span id="totalHadir">0</span></p>
+      <p>Jumlah Alfa: <span id="totalAlfa">0</span></p>
+      <p>Jumlah Sakit: <span id="totalSakit">0</span></p>
+      <p>Jumlah Izin: <span id="totalIzin">0</span></p>
+    </div>
+
+    <button onclick="resetData()">🔄 Reset Semua Data</button>
+    <button onclick="exportToPDF()">📄 Ekspor ke PDF</button>
+  </section>
+
+  <script src="script.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js");
+    }
+  </script>
+</body>
+</html>
+<h3>📂 Impor dari File CSV</h3>
+<input type="file" id="csvInput" accept=".csv" />
+<button onclick="importCSV()">Impor Siswa</button>
+
